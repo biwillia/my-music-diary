@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8"/>
+
+<style>
+
+body {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+.title-bar {
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+.title-bar-left {
+    display:inline-block;
+    width:50%;
+}
+
+.title-bar-right {
+    display:inline-block;
+    position: absolute;
+    right:20px;
+    width:50%
+}
+
+.title-bar-text {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-left: .5em
+}
+
+.title-bar-text a {
+    color: #333;
+    text-decoration: none;
+}
+
+.title-bar-text a:link {
+    color: #333;
+    text-decoration: none;
+}
+
+.title-bar-text a:visited {
+    color: #333;
+    text-decoration: none;
+}
+
+
+
+#tracks-table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+
+#tracks-table td, #tracks-table th {
+    border: none;
+    padding: 8px;
+}
+
+#tracks-table tr:nth-child(even){
+    background-color: #f8f8f8;
+}
+
+#tracks-table tr:hover {
+    background-color: #eee;
+}
+
+#tracks-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #89cff0;
+    color: #333;
+}
+
+.play-button-hover {
+    background-image: url("arrow.png");
+    background-repeat: no-repeat;
+    background-size: 12px 16px;
+    background-position: 13px 11px;
+    text-indent: -9999px
+}
+
+.pause-button-hover {
+    background-image: url("pause.png");
+    background-repeat: no-repeat;
+    background-size: 16px 20px;
+    background-position: 12px 9px;
+    text-indent: -9999px
+}
+
+.current-playing {
+    background-image: url("current-playing.png");
+    background-repeat: no-repeat;
+    background-size: 23px 23px;
+    background-position: 9px 8px;
+    text-indent: -9999px
+}
+
+.current-paused {
+    background-image: url("current-paused.png");
+    background-repeat: no-repeat;
+    background-size: 23px 23px;
+    background-position: 9px 8px;
+    text-indent: -9999px
+}
+
+.header {
+    background-image: url("banner.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+footer {
+    border-top: 1px solid #aaa;
+    color: #aaa;
+}
+
+.navlinks {
+    margin-top: 5px;
+}
+
+.navlinks a {
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.navlinks a:link {
+    color: #333
+}
+
+.navlinks a:visited {
+    color: #333
+}
+
+.navlinks a:hover {
+    text-decoration: underline;
+    color: #333
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="title-bar">
+    <div class="title-bar-left">
+        <div class="title-bar-text"><a href="/">My Music Diary</a></div>
+    </div>
+    
+    <div class="title-bar-right">
+        <div class="navlinks" style="float:right">
+            <a class="navlink" href="/">Home</a>
+            <a class="navlink" href="/about.html">About</a>
+            <a class="navlink" href="/contact.html">Contact</a>
+        </div>
+    </div>
+</div>
+
+<img src="banner.jpg" style="width:100%;height:20%"/>
+
+<br/><br/>
+<audio id="audio" controls style="width:500px">
+</audio>
+
+<table id="tracks-table">
+<thead>
+<tr>
+    <th style="min-width:15px"></th>
+    <th>Track #</th>
+    <th>Date Added</th>
+    <th>Title</th>
+    <th>Sample Set</th>
+    <th>Score (1-10)</th>
+    <th>Stars</th>
+    <th>Notes</th>
+    <th>Download</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+
+
+
+<br/></br><br/></br>
+<footer>
+<p>
+&copy; Copyright 2018 Benjamin I. Williams. All Rights Reserved
+</p>
+</footer>
+
+<script>
+
+var g_current_track = 1  // track number -- NOT track index, because g_tracks can be filtered/sorted
+var g_tracks = []
+
+
+
+
+
+function loadData(callback) {   
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json; charset=utf-8")
+    xobj.open('GET', 'data.json')
+    xobj.onreadystatechange = function () {
+      if (xobj.readyState == 4 && xobj.status == "200") {
+        json = xobj.responseText
+        callback(JSON.parse(json))
+      }
+    }
+    xobj.send()
+}
+
+function padTrackNumber(track) {
+    var trackpadded = '' + track
+    while (trackpadded.length < 4)
+        trackpadded = '0' + trackpadded
+    return trackpadded
+}
+
+
+
+
+function findNextTrack() {
+    var idx = -1
+    for (var i = 0; i < g_tracks.length; ++i) {
+        if (g_current_track == g_tracks[i].track) {
+            idx = i
+            break
+        }
+    }
+    
+    if (idx == -1) {
+        if (g_tracks.length > 0) {
+            return g_tracks[0].track
+        } else {
+            return -1
+        }
+    }
+    
+    idx++;
+    
+    if (idx < 0 || idx >= g_tracks.length) {
+        if (g_tracks.length > 0) {
+            return g_tracks[0].track
+        } else {
+            return -1
+        }
+    }
+    
+    return g_tracks[idx].track
+}
+
+
+function playTrack(track) {
+
+    var audio = document.getElementById("audio")
+    audio.src = "/music/" + padTrackNumber(track) + ".mp3"
+    audio.load()
+    audio.play()
+    
+    g_current_track = track
+}
+
+function isPaused() {
+    return document.getElementById("audio").paused
+}
+
+function pausePlayback() {
+    document.getElementById("audio").pause()
+}
+
+function resumePlayback() {
+    document.getElementById("audio").play()
+}
+
+
+ 
+
+function populateTable(tracks) {
+
+    var row, cell, a, stars, tbl = document.getElementById('tracks-table').getElementsByTagName('tbody')[0]
+    var trackpadded
+    
+    for (var i = 0; i < tracks.length; ++i) {
+
+        track = tracks[i]
+        
+        trackpadded = padTrackNumber(track.track)
+        
+        row = tbl.insertRow(tbl.rows.length)
+        row.id = "row-"+trackpadded
+        
+        row.addEventListener("mouseover", function(event) {   
+            var tr = event.target.closest("tr")
+            var track = (tr.id.substr(0,4) == 'row-' ? parseInt(tr.id.substr(4),10) : -1)
+            
+            tr.cells[0].classList.remove("current-playing")
+            tr.cells[0].classList.remove("current-paused")
+            
+            if (track == g_current_track && !isPaused()) {
+                tr.cells[0].classList.add("pause-button-hover")
+            } else {
+                tr.cells[0].classList.add("play-button-hover")
+            }
+        }, false);
+        row.addEventListener("mouseout", function(event) {   
+            var tr = event.target.closest("tr")
+            var track = (tr.id.substr(0,4) == 'row-' ? parseInt(tr.id.substr(4),10) : -1)
+            
+            tr.cells[0].classList.remove("current-playing")
+            tr.cells[0].classList.remove("current-paused")
+            tr.cells[0].classList.remove("play-button-hover")
+            tr.cells[0].classList.remove("pause-button-hover")
+            
+            if (track == g_current_track) {
+                if (isPaused()) {
+                    tr.cells[0].classList.add("current-paused")
+                } else {
+                    tr.cells[0].classList.add("current-playing")
+                }
+            }
+            
+
+             
+        }, false);
+        
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(''))
+        
+
+        cell.addEventListener("click", function(event) {   
+            var tr = event.target.closest("tr")
+            var track, trackpadded = tr.id
+            if (trackpadded.substr(0,4) == 'row-')
+            {
+                trackpadded = trackpadded.substr(4)
+                track = parseInt(trackpadded,10)
+                if (track == g_current_track) {
+                
+                    if (isPaused()) {
+                        resumePlayback()
+                        tr.cells[0].classList.add("pause-button-hover")
+                        tr.cells[0].classList.remove("play-button-hover")
+                    } else {
+                        pausePlayback()
+                        tr.cells[0].classList.add("play-button-hover")
+                        tr.cells[0].classList.remove("pause-button-hover")
+                    }
+                    
+                } else {
+
+                    var oldtr = document.getElementById('row-' + padTrackNumber(g_current_track))
+                    oldtr.cells[0].classList.remove("current-playing")
+                    oldtr.cells[0].classList.remove("current-paused")
+                        
+                    playTrack(track)
+                    tr.cells[0].classList.add("pause-button-hover")
+                    tr.cells[0].classList.remove("play-button-hover")
+                }
+            }
+        }, false);
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.track))
+        
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.date))
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.title))
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.sampleset))
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.score))
+
+        cell = row.insertCell(row.cells.length)
+        stars = "\u2605".repeat(track.stars) + "\u2606".repeat(5 - track.stars)
+        cell.innerHTML = "<div style='color:#2196f3'>" + stars + "</div>"
+        
+        cell = row.insertCell(row.cells.length)
+        cell.appendChild(document.createTextNode(track.notes))
+        
+        cell = row.insertCell(row.cells.length)
+        a = document.createElement('a')
+        a.appendChild(document.createTextNode("Link"))
+        a.title = "Listen to '" + track.title + "'"
+        a.href = "/music/" + trackpadded + ".mp3";
+        cell.appendChild(a)   
+    }
+}
+
+
+
+document.getElementById("audio").addEventListener("ended", function(event) {
+
+    var id = 'row-' + padTrackNumber(g_current_track)
+    var tr = document.getElementById(id)
+    tr.cells[0].classList.remove("current-playing")
+    tr.cells[0].classList.remove("current-paused")
+
+    var next_track = findNextTrack()
+    if (next_track != -1) {
+        playTrack(next_track)
+        
+        id = 'row-' + padTrackNumber(next_track)
+        tr = document.getElementById(id)
+        tr.cells[0].classList.add("current-playing")
+    }
+}, false);
+
+document.getElementById("audio").addEventListener("play", function(event) {   
+    var id = 'row-' + padTrackNumber(g_current_track)
+    var tr = document.getElementById(id)
+    if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
+        tr.cells[0].classList.add("current-playing")
+        tr.cells[0].classList.remove("current-paused")
+    }
+}, false);
+
+document.getElementById("audio").addEventListener("pause", function(event) {   
+    var id = 'row-' + padTrackNumber(g_current_track)
+    var tr = document.getElementById(id)
+    if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
+        tr.cells[0].classList.remove("current-playing")
+        tr.cells[0].classList.add("current-paused")
+    }
+}, false);
+
+loadData(function(tracks) {
+    g_tracks = tracks
+    g_tracks.reverse()
+    populateTable(g_tracks)
+    
+    if (g_tracks.length > 0) {
+        g_current_track = g_tracks[0].track
+        var audio = document.getElementById("audio")
+        audio.src = "/music/" + padTrackNumber(g_current_track) + ".mp3"
+        audio.load()
+        var id = 'row-' + padTrackNumber(g_current_track)
+        var tr = document.getElementById(id)
+        tr.cells[0].classList.remove("current-playing")
+        tr.cells[0].classList.add("current-paused")
+    }
+})
+
+ 
+ 
+ 
+</script>
+
+</body>
+
+</html>
+
+

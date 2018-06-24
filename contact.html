@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8"/>
+
+<style>
+
+body {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+
+.title-bar {
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+.title-bar-left {
+    display:inline-block;
+    width:50%;
+}
+
+.title-bar-right {
+    display:inline-block;
+    position: absolute;
+    right:20px;
+    width:50%
+}
+
+.title-bar-text {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-left: .5em
+}
+
+.title-bar-text a {
+    color: #000;
+    text-decoration: none;
+}
+
+.title-bar-text a:link {
+    color: #000;
+    text-decoration: none;
+}
+
+.title-bar-text a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+footer {
+  border-top: 1px solid #aaa;
+  color: #aaa;
+}
+
+
+.navlinks {
+    margin-top: 5px;
+}
+
+.navlinks a {
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.navlinks a:link {
+    color: #000
+}
+
+.navlinks a:visited {
+    color: #000
+}
+
+.navlinks a:hover {
+    text-decoration: underline;
+    color: #000
+}
+
+
+input {
+    display: inline-block;
+}
+
+.form-element {
+    margin-top: .5em;
+}
+
+.form-element input {
+    width: 20em;
+}
+
+.form-element textarea {
+    width: 30em;
+    height: 10em;
+}
+
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/flexio-sdk-js@latest"></script>
+</head>
+
+<div class="title-bar">
+    <div class="title-bar-left">
+        <div class="title-bar-text"><a href="/">My Music Diary</a></div>
+    </div>
+    
+    <div class="title-bar-right">
+        <div class="navlinks" style="float:right">
+            <a class="navlink" href="/">Home</a>
+            <a class="navlink" href="/about.html">About</a>
+            <a class="navlink" href="/contact.html">Contact</a>
+        </div>
+    </div>
+</div>
+
+
+<img src="banner.jpg" style="width:100%;height:20%"/>
+
+<br/><br/>
+
+
+<h2>Contact</h2>
+
+<p style="width:60%">
+I'd love to hear from you if you have any questions, feedback, tips, or recommendations. Fill out the form below to send me an email, and I'll be sure to get back to you.</a>.
+</p>
+
+
+
+<form id="contact-form">
+
+<div class="form-element">
+<input name="name" placeholder="Your Name" autofocus></input>
+</div>
+
+<div class="form-element">
+<input name="email" placeholder="Your Email Address"></input>
+</div>
+
+<div class="form-element">
+<textarea name="message" placeholder="Your Message"></textarea>
+</div>
+
+<div class="form-element">
+<button id="send-button" type="button">Send</button>
+</div>
+
+
+</form>
+<div id="thank-you"></div>
+
+
+
+
+
+<br/></br><br/></br>
+<footer>
+<p>
+&copy; Copyright 2018 Benjamin I. Williams. All Rights Reserved
+</p>
+</footer>
+
+
+<script>
+// get the html form
+
+
+document.getElementById('send-button').onclick = function(evt) {
+    var form = document.getElementById('contact-form')
+    var formdata = new FormData(form)
+
+    Flexio.setup("xtdkxpcjwzkpgkhkcmhx")
+    Flexio.pipe("musicdiary-contact").run({data: formdata})
+    
+    form.style = "display:none"
+    document.getElementById('thank-you').innerHTML = "<b>Your message was sent. Thank you for writing!</b>"
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
+
+

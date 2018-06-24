@@ -287,7 +287,37 @@ function resumePlayback() {
 }
 
 
- 
+function onClickPlay(event) {
+    var tr = event.target.closest("tr")
+    var track, trackpadded = tr.id
+    if (trackpadded.substr(0,4) == 'row-')
+    {
+        trackpadded = trackpadded.substr(4)
+        track = parseInt(trackpadded,10)
+        if (track == g_current_track) {
+        
+            if (isPaused()) {
+                resumePlayback()
+                tr.cells[0].classList.add("pause-button-hover")
+                tr.cells[0].classList.remove("play-button-hover")
+            } else {
+                pausePlayback()
+                tr.cells[0].classList.add("play-button-hover")
+                tr.cells[0].classList.remove("pause-button-hover")
+            }
+            
+        } else {
+
+            var oldtr = document.getElementById('row-' + padTrackNumber(g_current_track))
+            oldtr.cells[0].classList.remove("current-playing")
+            oldtr.cells[0].classList.remove("current-paused")
+                
+            playTrack(track)
+            tr.cells[0].classList.add("pause-button-hover")
+            tr.cells[0].classList.remove("play-button-hover")
+        }
+    }
+}
 
 function populateTable(tracks) {
 
@@ -338,64 +368,46 @@ function populateTable(tracks) {
         }, false);
         
         
+        // play column
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(''))
+        cell.addEventListener("click", onClickPlay, false);
         
-
-        cell.addEventListener("click", function(event) {   
-            var tr = event.target.closest("tr")
-            var track, trackpadded = tr.id
-            if (trackpadded.substr(0,4) == 'row-')
-            {
-                trackpadded = trackpadded.substr(4)
-                track = parseInt(trackpadded,10)
-                if (track == g_current_track) {
-                
-                    if (isPaused()) {
-                        resumePlayback()
-                        tr.cells[0].classList.add("pause-button-hover")
-                        tr.cells[0].classList.remove("play-button-hover")
-                    } else {
-                        pausePlayback()
-                        tr.cells[0].classList.add("play-button-hover")
-                        tr.cells[0].classList.remove("pause-button-hover")
-                    }
-                    
-                } else {
-
-                    var oldtr = document.getElementById('row-' + padTrackNumber(g_current_track))
-                    oldtr.cells[0].classList.remove("current-playing")
-                    oldtr.cells[0].classList.remove("current-paused")
-                        
-                    playTrack(track)
-                    tr.cells[0].classList.add("pause-button-hover")
-                    tr.cells[0].classList.remove("play-button-hover")
-                }
-            }
-        }, false);
-        
+        // track number
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.track))
+        cell.addEventListener("click", onClickPlay, false);
         
-        
+        // track date
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.date))
+        cell.addEventListener("click", onClickPlay, false);
         
+        // track title
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.title))
+        cell.addEventListener("click", onClickPlay, false);
         
+        // sample set
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.sampleset))
+        cell.addEventListener("click", onClickPlay, false);
         
+        // score
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.score))
+        cell.addEventListener("click", onClickPlay, false);
 
+        // stars
         cell = row.insertCell(row.cells.length)
         stars = "\u2605".repeat(track.stars) + "\u2606".repeat(5 - track.stars)
         cell.innerHTML = "<div style='color:#2196f3'>" + stars + "</div>"
+        cell.addEventListener("click", onClickPlay, false);
         
+        // notes
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.notes))
+        cell.addEventListener("click", onClickPlay, false);
         
         cell = row.insertCell(row.cells.length)
         a = document.createElement('a')

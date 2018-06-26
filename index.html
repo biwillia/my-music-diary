@@ -80,34 +80,34 @@ body {
 }
 
 .play-button-hover {
-    background-image: url("arrow.png");
+    background-image: url("play.svg");
     background-repeat: no-repeat;
-    background-size: 12px 16px;
-    background-position: 13px 11px;
+    background-size: auto 1.0pc;
+    background-position: center;
     text-indent: -9999px
 }
 
 .pause-button-hover {
     background-image: url("pause.png");
     background-repeat: no-repeat;
-    background-size: 16px 20px;
-    background-position: 12px 9px;
+    background-size: auto 1.3pc;
+    background-position: center;
     text-indent: -9999px
 }
 
 .current-playing {
-    background-image: url("current-playing.png");
+    background-image: url("current-playing.svg");
     background-repeat: no-repeat;
-    background-size: 23px 23px;
-    background-position: 9px 8px;
+    background-size: auto 1.5pc;
+    background-position: center;
     text-indent: -9999px
 }
 
 .current-paused {
-    background-image: url("current-paused.png");
+    background-image: url("current-paused.svg");
     background-repeat: no-repeat;
-    background-size: 23px 23px;
-    background-position: 9px 8px;
+    background-size: auto 1.5pc;
+    background-position: center;
     text-indent: -9999px
 }
 
@@ -184,7 +184,8 @@ footer {
     <th>Score (1-10)</th>
     <th>Stars</th>
     <th>Notes</th>
-    <th>Download</th>
+    <th>Duration</th>
+    <th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -194,7 +195,7 @@ footer {
 
 
 
-<br/></br><br/></br>
+<br/><br/><br/><br/>
 <footer>
 <p>
 &copy; Copyright 2018 Benjamin I. Williams. All Rights Reserved
@@ -207,6 +208,35 @@ var g_current_track = 1  // track number -- NOT track index, because g_tracks ca
 var g_tracks = []
 
 
+
+// begin polyfills for IE11
+if (!String.prototype.repeat) {
+  String.prototype.repeat = function(count) {
+    var str = '' + this;
+    count = +count
+    var rpt = '';
+    for (var i = 0; i < count; i++) {
+      rpt += str;
+    }
+    return rpt;
+  }
+}
+(function (ElementProto) {
+	if (typeof ElementProto.matches !== 'function') {
+		ElementProto.matches = ElementProto.msMatchesSelector
+	}
+	if (typeof ElementProto.closest !== 'function') {
+		ElementProto.closest = function closest(selector) {
+			var element = this
+			while (element && element.nodeType === 1) {
+				if (element.matches(selector)) { return element }
+				element = element.parentNode;
+			}
+			return null
+		}
+	}
+})(window.Element.prototype);
+// end polyfills for IE11
 
 
 
@@ -324,6 +354,7 @@ function populateTable(tracks) {
     var row, cell, a, stars, tbl = document.getElementById('tracks-table').getElementsByTagName('tbody')[0]
     var trackpadded
     
+    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
     for (var i = 0; i < tracks.length; ++i) {
 
         track = tracks[i]
@@ -409,12 +440,29 @@ function populateTable(tracks) {
         cell.appendChild(document.createTextNode(track.notes))
         cell.addEventListener("click", onClickPlay, false);
         
+        // duration
         cell = row.insertCell(row.cells.length)
+		cell.align = 'right'
+        cell.appendChild(document.createTextNode(track.duration))
+        cell.addEventListener("click", onClickPlay, false);
+        
+        cell = row.insertCell(row.cells.length)
+		cell.align = 'center'
         a = document.createElement('a')
-        a.appendChild(document.createTextNode("Link"))
+        //a.appendChild(document.createTextNode("Link"))
+		var img = document.createElement('img')
+		img.src = "download.svg"
+        if (isIE11) {
+            img.width = 16
+            img.height = 16
+        } else {
+            img.style = "height: 1em; width:auto"
+        }
+         
+		a.appendChild(img)
         a.title = "Listen to '" + track.title + "'"
         a.href = "/music/" + trackpadded + ".mp3";
-        cell.appendChild(a)   
+        cell.appendChild(a)  
     }
 }
 

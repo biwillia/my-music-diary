@@ -255,7 +255,15 @@ if (!String.prototype.repeat) {
 })(window.Element.prototype);
 // end polyfills for IE11
 
-
+function getQueryStringParameter(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 function loadData(callback) {   
     var xobj = new XMLHttpRequest();
@@ -534,6 +542,15 @@ loadData(function(tracks) {
         var tr = document.getElementById(id)
         tr.cells[0].classList.remove("current-playing")
         tr.cells[0].classList.add("current-paused")
+		
+		
+		var play = '' + getQueryStringParameter('play')
+		var trackpadded = padTrackNumber(play)
+		var trautoplay = document.getElementById('row-' + trackpadded)
+		if (trautoplay) {
+			var evt = { target: trautoplay.cells[0] }
+			onClickPlay(evt)
+		}
     }
 })
 

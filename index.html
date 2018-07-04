@@ -128,6 +128,16 @@ body {
     text-indent: -9999px
 }
 
+.checkmark {
+    background-image: url("checkmark.svg");
+    background-repeat: no-repeat;
+    background-size: auto 1.0pc;
+    background-position: center;
+	margin-right: 0.3pc;
+    text-indent: -9999px
+}
+
+
 .header {
     background-image: url("banner.jpg");
     background-position: center;
@@ -388,6 +398,28 @@ function onClickPlay(event) {
     }
 }
 
+function onToggleSelected(event) {
+	var td = event.target
+    var tr = event.target.closest("tr")
+    var track, trackpadded = tr.id
+    if (trackpadded.substr(0,4) == 'row-')
+    {
+        trackpadded = trackpadded.substr(4)
+        track = parseInt(trackpadded,10)
+
+		for (var i = 0; i < g_tracks.length; ++i) {
+			if (g_tracks[i].track == track) {
+				g_tracks[i].selected = !g_tracks[i].selected
+				if (g_tracks[i].selected) {
+					td.classList.add("checkmark")
+				} else {
+					td.classList.remove("checkmark")
+				}
+			}
+		}
+    }
+}
+
 function populateTable(tracks) {
 
     var row, cell, a, stars, tbl = document.getElementById('tracks-table').getElementsByTagName('tbody')[0]
@@ -449,8 +481,29 @@ function populateTable(tracks) {
         cell.addEventListener("click", onClickPlay, false);
         
         // selected
+		cell = row.insertCell(row.cells.length)
+        cell.addEventListener("click", onToggleSelected, false);
+		if (track.selected) {
+			cell.classList.add('checkmark')
+		}
+        
+		/*
         cell = row.insertCell(row.cells.length)
-        cell.appendChild(document.createTextNode(track.selected ? 'Y':'N'))  
+		//cell.align = 'center'
+		var img = document.createElement('img')
+
+		if (track.selected) {
+			img.src = "checkmark.svg"
+			if (isIE11) {
+				img.width = 16
+				img.height = 16
+			} else {
+				img.style = "margin-top: 0.2pc; margin-left: 0.5pc; height: 1em; width:auto"
+			}
+		}
+        cell.appendChild(img)  
+		*/
+		
 		
         // track date
         cell = row.insertCell(row.cells.length)

@@ -57,7 +57,9 @@
 { "track": 56, "selected": true,  "sampleset": "Altenbruch",      "title": "Baroque Trio Slow Movement in A minor",              "score": 6, "stars": 3, "date": "2018-06-22", "duration": "3:43", "notes": "Ok; some voice leading errors and style-incongruent modulations" },
 { "track": 57, "selected": true,  "sampleset": "Altenbruch",      "title": "Little Cute Trio",                                   "score": 8, "stars": 4, "date": "2018-06-24", "duration": "1:30", "notes": "Not entirely baroque, but still fun" },
 { "track": 58, "selected": true,  "sampleset": "Caen",            "title": "Comforting a Downcast Child",                        "score": 7, "stars": 3, "date": "2018-06-27", "duration": "3:01", "notes": "Bumped it up to score 7; I'm liking it more" },
-{ "track": 59, "selected": true,  "sampleset": "Metz St. Eucaire","title": "At a German Village Fair",                           "score": 7, "stars": 4, "date": "2018-06-29", "duration": "2:51", "notes": "Cute/Funny melody" },
+{ "track": 59, "selected": true,  "sampleset": "Metz St. Eucaire","title": "At a German Village Fair",                           "score": 8, "stars": 4, "date": "2018-06-29", "duration": "2:51", "notes": "Cute/Funny melody; Bumped score to 8" },
 { "track": 60, "selected": true,  "sampleset": "Metz St. Eucaire","title": "Romantic Chromatic Fugue",                           "score": 6, "stars": 3, "date": "2018-07-04", "duration": "3:54", "notes": "Fugue on known chromatic theme; nothing to write home about" },
-{ "track": 61, "selected": true,  "sampleset": "Caen",            "title": "Phrygian Wanderer",                                  "score": 7, "stars": 3, "date": "2018-07-07", "duration": "1:35", "notes": "" }
+{ "track": 61, "selected": true,  "sampleset": "Caen",            "title": "Phrygian Wanderer",                                  "score": 7, "stars": 3, "date": "2018-07-07", "duration": "1:35", "notes": "" },
+{ "track": 62, "selected": true,  "sampleset": "Rosales",         "title": "Youthful Optimism",                                  "score": 7, "stars": 4, "date": "2018-07-13", "duration": "2:41", "notes": "Nice energy; ending a little sudden" }
+
 ]

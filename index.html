@@ -11,6 +11,8 @@
 <meta name="author" content="Benjamin I. Williams" />
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<!--
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121537756-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -19,163 +21,14 @@
 
   gtag('config', 'UA-121537756-1');
 </script>
-
-
-<style>
-
-body {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    color: #333;
-}
-
-.title-bar {
-    margin-top: 1em;
-    margin-bottom: .5em;
-}
-
-.title-bar-left {
-    display:inline-block;
-    width:50%;
-}
-
-.title-bar-right {
-    display:inline-block;
-    position: absolute;
-    right:20px;
-    width:50%
-}
-
-.title-bar-text {
-    font-size: 18pt;
-    font-weight: bold;
-    margin-left: .5em
-}
-
-.title-bar-text a {
-    color: #333;
-    text-decoration: none;
-}
-
-.title-bar-text a:link {
-    color: #333;
-    text-decoration: none;
-}
-
-.title-bar-text a:visited {
-    color: #333;
-    text-decoration: none;
-}
+-->
 
 
 
-#tracks-table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    border: none;
-    width: 100%;
-}
 
-#tracks-table td, #tracks-table th {
-    border: none;
-    padding: 8px;
-}
-
-#tracks-table tr:nth-child(even){
-    background-color: #f8f8f8;
-}
-
-#tracks-table tr:hover {
-    background-color: #eee;
-}
-
-#tracks-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #89cff0;
-    color: #333;
-}
-
-.play-button-hover {
-    background-image: url("play.svg");
-    background-repeat: no-repeat;
-    background-size: auto 1.0pc;
-    background-position: center;
-    text-indent: -9999px
-}
-
-.pause-button-hover {
-    background-image: url("pause.png");
-    background-repeat: no-repeat;
-    background-size: auto 1.3pc;
-    background-position: center;
-    text-indent: -9999px
-}
-
-.current-playing {
-    background-image: url("current-playing.svg");
-    background-repeat: no-repeat;
-    background-size: auto 1.5pc;
-    background-position: center;
-    text-indent: -9999px
-}
-
-.current-paused {
-    background-image: url("current-paused.svg");
-    background-repeat: no-repeat;
-    background-size: auto 1.5pc;
-    background-position: center;
-    text-indent: -9999px
-}
-
-.checkmark {
-    background-image: url("checkmark.svg");
-    background-repeat: no-repeat;
-    background-size: auto 1.0pc;
-    background-position: center;
-	margin-right: 0.3pc;
-    text-indent: -9999px
-}
+<link rel="stylesheet" href="style.css">
 
 
-.header {
-    background-image: url("banner.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-footer {
-    border-top: 1px solid #aaa;
-    color: #aaa;
-}
-
-.navlinks {
-    margin-top: 5px;
-}
-
-.navlinks a {
-    text-decoration: none;
-    margin-left: 20px;
-}
-
-.navlinks a:link {
-    color: #333
-}
-
-.navlinks a:visited {
-    color: #333
-}
-
-.navlinks a:hover {
-    text-decoration: underline;
-    color: #333
-}
-
-
-
-</style>
 </head>
 
 <body>
@@ -221,6 +74,18 @@ footer {
 </table>
 
 
+<div class="player-controls-container">
+    <div class="player-controls">
+        <button id="controls-skip-prev" class="controls-skip-prev"></button>
+        <button id="controls-play-pause" class="controls-play"></button>
+        <button id="controls-skip-next" class="controls-skip-next"></button>
+        <input type="range" id="controls-position" class="controls-position"></input>
+        <button id="controls-volume-button" class="controls-volume-button"></button>
+        <input type="range" id="controls-volume" class="controls-volume"></input>
+    </div>
+</div>
+
+
 
 
 <br/><br/><br/><br/>
@@ -228,6 +93,7 @@ footer {
 <p>
 &copy; Copyright 2018 Benjamin I. Williams. All Rights Reserved
 </p>
+<br/><br/><br/><br/>
 </footer>
 
 <script>
@@ -299,8 +165,11 @@ function padTrackNumber(track) {
 
 
 
-function findNextTrack() {
+// dir = 1 to find next track, dir = -1 to find prev track
+function findNextTrack(dir) {
     var idx = -1
+    
+    // first, find the current index of g_tracks we are on based on g_current_track
     for (var i = 0; i < g_tracks.length; ++i) {
         if (g_current_track == g_tracks[i].track) {
             idx = i
@@ -310,18 +179,18 @@ function findNextTrack() {
     
     if (idx == -1) {
         if (g_tracks.length > 0) {
-            return g_tracks[0].track
+            return (dir > 0 ? g_tracks[0].track : g_tracks[g_tracks.length - 1].track)
         } else {
             return -1
         }
     }
 
 	var started_over = false
-	idx++;
+	idx += dir
 
 	while (true)
 	{
-		if (idx < g_tracks.length)
+		if ((dir > 0 && idx < g_tracks.length) || (dir < 0 && idx >= 0))
 		{
 			if (g_tracks[idx].selected) {
 				return g_tracks[idx].track
@@ -329,16 +198,20 @@ function findNextTrack() {
 		}
 		 else
 		{
-			// start over at top
+			// start over at the other side
 			if (g_tracks.length > 0 && !started_over) {
-				idx = -1
+                if (dir > 0) {
+                    idx = -1
+                } else {
+                    idx = g_tracks.length
+                }
 				started_over = true
 			} else {
 				return -1
 			}
 		}
 		
-		idx++
+		idx += dir
 	}
 }
 
@@ -364,6 +237,25 @@ function pausePlayback() {
 function resumePlayback() {
     document.getElementById("audio").play()
 }
+
+function skipTrack(dir) {
+    var id = 'row-' + padTrackNumber(g_current_track)
+    var tr = document.getElementById(id)
+    if (tr) {
+        tr.cells[0].classList.remove("current-playing")
+        tr.cells[0].classList.remove("current-paused")
+
+        var next_track = findNextTrack(dir)
+        if (next_track != -1) {
+            playTrack(next_track)
+            
+            id = 'row-' + padTrackNumber(next_track)
+            tr = document.getElementById(id)
+            tr.cells[0].classList.add("current-playing")
+        }
+    }
+ }
+ 
 
 
 function onClickPlay(event) {
@@ -564,69 +456,145 @@ function populateTable(tracks) {
 
 
 
-document.getElementById("audio").addEventListener("ended", function(event) {
+function doInit() {
 
-    var id = 'row-' + padTrackNumber(g_current_track)
-    var tr = document.getElementById(id)
-    tr.cells[0].classList.remove("current-playing")
-    tr.cells[0].classList.remove("current-paused")
+    var audio = document.getElementById("audio")
+    var controls_skip_prev = document.getElementById("controls-skip-prev")
+    var controls_skip_next = document.getElementById("controls-skip-next")
+    var controls_play_pause = document.getElementById("controls-play-pause")
+    var controls_position = document.getElementById("controls-position")
+    var controls_volume = document.getElementById("controls-volume")
 
-    var next_track = findNextTrack()
-    if (next_track != -1) {
-        playTrack(next_track)
-        
-        id = 'row-' + padTrackNumber(next_track)
-        tr = document.getElementById(id)
-        tr.cells[0].classList.add("current-playing")
-    }
-}, false);
+    audio.addEventListener("ended", function(event) {
+        skipTrack(1)
+    }, false);
 
-document.getElementById("audio").addEventListener("play", function(event) {   
-    var id = 'row-' + padTrackNumber(g_current_track)
-    var tr = document.getElementById(id)
-    if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
-        tr.cells[0].classList.add("current-playing")
-        tr.cells[0].classList.remove("current-paused")
-    }
-}, false);
-
-document.getElementById("audio").addEventListener("pause", function(event) {   
-    var id = 'row-' + padTrackNumber(g_current_track)
-    var tr = document.getElementById(id)
-    if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
-        tr.cells[0].classList.remove("current-playing")
-        tr.cells[0].classList.add("current-paused")
-    }
-}, false);
-
-loadData(function(tracks) {
-    g_tracks = tracks
-    g_tracks.reverse()
-    populateTable(g_tracks)
-    
-    if (g_tracks.length > 0) {
-        g_current_track = g_tracks[0].track
-        var audio = document.getElementById("audio")
-        audio.src = "/music/" + padTrackNumber(g_current_track) + ".mp3"
-        audio.load()
+    audio.addEventListener("play", function(event) {   
         var id = 'row-' + padTrackNumber(g_current_track)
         var tr = document.getElementById(id)
-        tr.cells[0].classList.remove("current-playing")
-        tr.cells[0].classList.add("current-paused")
-		
-		
-		var play = '' + getQueryStringParameter('play')
-		var trackpadded = padTrackNumber(play)
-		var trautoplay = document.getElementById('row-' + trackpadded)
-		if (trautoplay) {
-			var evt = { target: trautoplay.cells[0] }
-			onClickPlay(evt)
-		}
-    }
-})
+        if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
+            tr.cells[0].classList.add("current-playing")
+            tr.cells[0].classList.remove("current-paused")
+        }
+        
+        if (controls_play_pause) {
+            // music is playing, so change the play button to pause
+            controls_play_pause.classList.remove("controls-play")
+            controls_play_pause.classList.add("controls-pause")
+        }
+        
+    }, false);
 
+    audio.addEventListener("loadedmetadata", function(event) {
+        if (controls_position) {
+            controls_position.max = Math.floor(audio.duration)
+            controls_position.value = Math.floor(audio.currentTime)
+        }
+        
+        if (controls_volume) {
+            controls_volume.value = audio.volume * 100
+        }
+    })
+
+    audio.addEventListener("pause", function(event) {   
+        var id = 'row-' + padTrackNumber(g_current_track)
+        var tr = document.getElementById(id)
+        if (!tr.cells[0].classList.contains("play-button-hover") && !tr.cells[0].classList.contains("pause-button-hover")) {
+            tr.cells[0].classList.remove("current-playing")
+            tr.cells[0].classList.add("current-paused")
+        }
+        
+        if (controls_play_pause) {
+            // music is playing, so change the play button to pause
+            controls_play_pause.classList.add("controls-play")
+            controls_play_pause.classList.remove("controls-pause")
+        }
+        
+    }, false);
+
+    
+    
+    if (controls_play_pause) {
+        controls_play_pause.addEventListener("click", function(event) {
+            if (audio.paused) {
+                audio.play()
+            } else {
+                audio.pause()
+            }
+        }, false)
+    }
+    
+    if (controls_position) {
+        audio.addEventListener("timeupdate", function(event) {   
+            controls_position.value = audio.currentTime
+        }, false)
+        
+        controls_position.addEventListener("change", function(event) {
+            audio.currentTime = controls_position.value
+        }, false)
+    }
+    
+    if (controls_volume) {
+        audio.addEventListener("volumechange", function(event) {   
+            controls_volume.value = audio.volume * 100
+        }, false)
+        
+        // event handler for volume with mouse tracking
+        controls_volume.addEventListener("input", function(event) {
+            audio.volume = controls_volume.value / 100
+        }, false)
+        
+        // IE compat; happens when mouse button released
+        controls_volume.addEventListener("change", function(event) {
+            audio.volume = controls_volume.value / 100
+        }, false)
+    }
+    
+    if (controls_skip_prev) {
+        controls_skip_prev.addEventListener("click", function(event) {
+            skipTrack(-1)
+        }, false)
+    }
+    
+    if (controls_skip_next) {
+        controls_skip_next.addEventListener("click", function(event) {
+            skipTrack(1)
+        }, false)
+    }
+
+
+    loadData(function(tracks) {
+        g_tracks = tracks
+        g_tracks.reverse()
+        populateTable(g_tracks)
+        
+        if (g_tracks.length > 0) {
+            g_current_track = g_tracks[0].track
+            var audio = document.getElementById("audio")
+            audio.src = "/music/" + padTrackNumber(g_current_track) + ".mp3"
+            audio.load()
+            var id = 'row-' + padTrackNumber(g_current_track)
+            var tr = document.getElementById(id)
+            tr.cells[0].classList.remove("current-playing")
+            tr.cells[0].classList.add("current-paused")
+            
+            
+            var play = '' + getQueryStringParameter('play')
+            var trackpadded = padTrackNumber(play)
+            var trautoplay = document.getElementById('row-' + trackpadded)
+            if (trautoplay) {
+                var evt = { target: trautoplay.cells[0] }
+                onClickPlay(evt)
+            }
+        }
+    })
  
- 
+}
+
+
+
+doInit()
+
  
 </script>
 

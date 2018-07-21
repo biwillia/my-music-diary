@@ -228,6 +228,7 @@ footer {
 
 .navlinks {
     margin-top: 5px;
+    font-weight: 550;
 }
 
 .navlinks a {
@@ -236,16 +237,16 @@ footer {
 }
 
 .navlinks a:link {
-    color: #333
+    color: #555
 }
 
 .navlinks a:visited {
-    color: #333
+    color: #555
 }
 
 .navlinks a:hover {
     text-decoration: underline;
-    color: #333
+    color: #555
 }
 
 

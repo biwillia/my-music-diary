@@ -154,7 +154,6 @@ body {
 
 #tracks-table td, #tracks-table th {
     border: none;
-    padding: 8px;
 }
 
 #tracks-table tr:nth-child(even){
@@ -411,6 +410,10 @@ audio {
     
     .controls-volume {
         display: none;
+    }
+    
+    .stars {
+        font-size: 8pt;
     }
 }
 

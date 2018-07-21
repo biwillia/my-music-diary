@@ -329,6 +329,10 @@ function addClasses(tr, arr) {
     }
 }
 
+function isMobile() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)
+};
+
 function populateTable(tracks) {
 
     var row, cell, a, i, stars, tbl = document.getElementById('tracks-table').getElementsByTagName('tbody')[0]

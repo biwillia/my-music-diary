@@ -143,6 +143,8 @@ body {
 
 
 
+
+
 #tracks-table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -251,8 +253,59 @@ footer {
 
 
 
+@media screen and (max-width: 800px) {
+    .navlinks a {
+        font-size: 8pt;
+        margin-left: 10px;
+    }
+
+}
 
 
+
+
+
+
+@media screen and (min-width: 800px) {
+    .priority-3 {
+    }
+    .priority-2 {
+    }
+    .priority-1 {
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .priority-3 {
+        display:none;
+    }
+    .priority-2 {
+        display:none;
+    }
+    .priority-1 {
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+audio {
+    width:500px;
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    audio {
+        width: 100%;
+    }
+}
 
 
 .player-controls-container {
@@ -261,7 +314,7 @@ footer {
 	bottom: 0;
 	width: 100%;
     background-color: #f2f2f2;
-box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
+    box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
 }
 
 .player-controls {
@@ -273,29 +326,22 @@ box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
 }
 
 
-
 .player-controls-buttons {
     display:inline-block;
 }
 
+
 .controls-play {
     background: none;
     background-image: url("baseline-play_arrow-24px.svg");
-    background-size: 2pc 2pc;
-    width: 2pc;
-    height: 2pc;
     border: none;
 }
 
 .controls-pause {
     background: none;
     background-image: url("baseline-pause-24px.svg");
-    background-size: 2pc 2pc;
-    width: 2pc;
-    height: 2pc;
     border: none;
 }
-
 
 .controls-play-pause:focus {
     outline: none;
@@ -304,9 +350,6 @@ box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
 .controls-skip-prev {
     background: none;
     background-image: url("baseline-skip_previous-24px.svg");
-    background-size: 2pc 2pc;
-    width: 2pc;
-    height: 2pc;
     border: none;
 }
 
@@ -314,14 +357,9 @@ box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
     outline: none;
 }
 
-
-
 .controls-skip-next {
     background: none;
     background-image: url("baseline-skip_next-24px.svg");
-    background-size: 2pc 2pc;
-    width: 2pc;
-    height: 2pc;
     border: none;
 }
 
@@ -342,7 +380,11 @@ box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
     outline: none;
 }
 
-
+.controls-play-pause-skip-buttons {
+    background-size: 2pc 2pc;
+    width: 2pc;
+    height: 2pc;
+}
 
 .controls-position {
     width: 20%;
@@ -354,6 +396,23 @@ box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.1);
     align: vertical-align;
 }
 
+
+
+@media screen and (max-width: 800px) {
+    .controls-play-pause-skip-buttons {
+        background-size: 3pc 3pc;
+        width: 3pc;
+        height: 3pc;
+    }
+    
+    .controls-volume-button {
+        display: none;
+    }
+    
+    .controls-volume {
+        display: none;
+    }
+}
 
 
 

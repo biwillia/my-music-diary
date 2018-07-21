@@ -251,13 +251,26 @@ footer {
 }
 
 
-
+.non-mobile {
+    display: block;
+}
+    
+.mobile {
+    display: none;
+}
+    
 @media screen and (max-width: 800px) {
     .navlinks a {
         font-size: 8pt;
         margin-left: 10px;
     }
 
+    .non-mobile {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
 }
 
 

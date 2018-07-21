@@ -212,7 +212,7 @@ function findNextTrack(dir) {
 }
 
 
-function playTrack(track) {
+function playTrack(track, clicked) {
 
     var audio = document.getElementById("audio")
     audio.src = "/music/" + padTrackNumber(track) + ".mp3"
@@ -220,6 +220,15 @@ function playTrack(track) {
     audio.play()
     
     g_current_track = track
+    
+    gtag('event', 'view_item', {
+      "items": [
+        {
+          'id': padTrackNumber(track),
+          'clicked': clicked
+        }
+      ]
+    })
 }
 
 function isPaused() {
@@ -243,7 +252,7 @@ function skipTrack(dir) {
 
         var next_track = findNextTrack(dir)
         if (next_track != -1) {
-            playTrack(next_track)
+            playTrack(next_track, false)
             
             id = 'row-' + padTrackNumber(next_track)
             tr = document.getElementById(id)
@@ -279,7 +288,7 @@ function onClickPlay(event) {
             oldtr.cells[0].classList.remove("current-playing")
             oldtr.cells[0].classList.remove("current-paused")
                 
-            playTrack(track)
+            playTrack(track, true)
             tr.cells[0].classList.add("pause-button-hover")
             tr.cells[0].classList.remove("play-button-hover")
         }

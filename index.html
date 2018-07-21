@@ -539,6 +539,12 @@ function doInit() {
     
     if (controls_play_pause) {
         controls_play_pause.addEventListener("click", function(event) {
+            if (controls_play_pause) {
+                // this is included here to yield instant feedback
+                controls_play_pause.classList.remove("controls-play")
+                controls_play_pause.classList.add("controls-pause")
+            }
+        
             if (audio.paused) {
                 audio.play()
             } else {
@@ -575,12 +581,22 @@ function doInit() {
     
     if (controls_skip_prev) {
         controls_skip_prev.addEventListener("click", function(event) {
+            if (controls_play_pause) {
+                // this is included here to yield instant feedback
+                controls_play_pause.classList.remove("controls-play")
+                controls_play_pause.classList.add("controls-pause")
+            }
             skipTrack(-1)
         }, false)
     }
     
     if (controls_skip_next) {
         controls_skip_next.addEventListener("click", function(event) {
+            if (controls_play_pause) {
+                // this is included here to yield instant feedback
+                controls_play_pause.classList.remove("controls-play")
+                controls_play_pause.classList.add("controls-pause")
+            }
             skipTrack(1)
         }, false)
     }

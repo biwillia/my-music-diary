@@ -412,9 +412,9 @@ audio {
 
 @media screen and (max-width: 800px) {
     .controls-play-pause-skip-buttons {
-        background-size: 3pc 3pc;
-        width: 3pc;
-        height: 3pc;
+        background-size: 5pc 5pc;
+        width: 5pc;
+        height: 5pc;
     }
     
     .controls-volume-button {

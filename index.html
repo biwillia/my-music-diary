@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<img src="banner.jpg" style="width:100%;height:20%"/>
+<img src="/assets/img/banner.jpg" style="width:100%;height:20%"/>
 
 <br/>
 <audio id="audio" controls></audio>
@@ -290,9 +290,26 @@ function onClickPlay(event) {
             
         } else {
 
+        /*
             var oldtr = document.getElementById('row-' + padTrackNumber(g_current_track))
             oldtr.cells[0].classList.remove("current-playing")
             oldtr.cells[0].classList.remove("current-paused")
+                */
+                
+            var elems = document.querySelectorAll(".current-playing");
+
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("current-playing");
+            });       
+
+            var elems = document.querySelectorAll(".current-paused");
+
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("current-paused");
+            });            
+                
+
+            
                 
             playTrack(track, true)
             tr.cells[0].classList.add("pause-button-hover")
@@ -330,7 +347,7 @@ function addClasses(tr, arr) {
 }
 
 function isMobile() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 };
 
 function populateTable(tracks) {
@@ -364,7 +381,7 @@ function populateTable(tracks) {
         
         row = tbl.insertRow(tbl.rows.length)
         row.id = "row-"+trackpadded
-        
+
         row.addEventListener("mouseover", function(event) {   
             var tr = event.target.closest("tr")
             var track = (tr.id.substr(0,4) == 'row-' ? parseInt(tr.id.substr(4),10) : -1)
@@ -394,11 +411,8 @@ function populateTable(tracks) {
                     tr.cells[0].classList.add("current-playing")
                 }
             }
-            
-
-             
         }, false);
-        
+
         
         // play column
         cell = row.insertCell(row.cells.length)

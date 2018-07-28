@@ -2,6 +2,7 @@
 body {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     color: #333;
+    margin: 0px;
 }
 
 .title-bar {
@@ -75,7 +76,7 @@ body {
 }
 
 .play-button-hover {
-    background-image: url("play.svg");
+    background-image: url("/assets/img/play.svg");
     background-repeat: no-repeat;
     background-size: auto 1.0pc;
     background-position: center;
@@ -83,7 +84,7 @@ body {
 }
 
 .pause-button-hover {
-    background-image: url("pause.png");
+    background-image: url("/assets/img/pause.png");
     background-repeat: no-repeat;
     background-size: auto 1.3pc;
     background-position: center;
@@ -91,7 +92,7 @@ body {
 }
 
 .current-playing {
-    background-image: url("current-playing.svg");
+    background-image: url("/assets/img/current-playing.svg");
     background-repeat: no-repeat;
     background-size: auto 1.5pc;
     background-position: center;
@@ -99,7 +100,7 @@ body {
 }
 
 .current-paused {
-    background-image: url("current-paused.svg");
+    background-image: url("/assets/img/current-paused.svg");
     background-repeat: no-repeat;
     background-size: auto 1.5pc;
     background-position: center;
@@ -107,7 +108,7 @@ body {
 }
 
 .checkmark {
-    background-image: url("checkmark.svg");
+    background-image: url("/assets/img/checkmark.svg");
     background-repeat: no-repeat;
     background-size: auto 1.0pc;
     background-position: center;
@@ -117,7 +118,7 @@ body {
 
 
 .header {
-    background-image: url("banner.jpg");
+    background-image: url("/assets/img/banner.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -257,13 +258,13 @@ audio {
 
 .controls-play {
     background: none;
-    background-image: url("baseline-play_arrow-24px.svg");
+    background-image: url("/assets/img/baseline-play_arrow-24px.svg");
     border: none;
 }
 
 .controls-pause {
     background: none;
-    background-image: url("baseline-pause-24px.svg");
+    background-image: url("/assets/img/baseline-pause-24px.svg");
     border: none;
 }
 
@@ -273,7 +274,7 @@ audio {
 
 .controls-skip-prev {
     background: none;
-    background-image: url("baseline-skip_previous-24px.svg");
+    background-image: url("/assets/img/baseline-skip_previous-24px.svg");
     border: none;
 }
 
@@ -283,7 +284,7 @@ audio {
 
 .controls-skip-next {
     background: none;
-    background-image: url("baseline-skip_next-24px.svg");
+    background-image: url("/assets/img/baseline-skip_next-24px.svg");
     border: none;
 }
 
@@ -293,7 +294,7 @@ audio {
 
 .controls-volume-button {
     background: none;
-    background-image: url("baseline-volume_up-24px.svg");
+    background-image: url("/assets/img/baseline-volume_up-24px.svg");
     background-size: 1.5pc 1.5pc;
     width: 1.5pc;
     height: 1.5pc;

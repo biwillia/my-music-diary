@@ -17,7 +17,7 @@
 { "track": 16, "selected": true,  "sampleset": "Caen",            "title": "Strings",                                            "score": 7, "stars": 3, "date": "2018-04-17", "duration": "6:05", "notes": "" },
 { "track": 17, "selected": true,  "sampleset": "Menesterol",      "title": "Flint and Rubber",                                   "score": 7, "stars": 3, "date": "2018-04-18", "duration": "3:04", "notes": "Neat arpeggios at end" },
 { "track": 18, "selected": true,  "sampleset": "Menesterol",      "title": "Baroquish Fughetta",                                 "score": 6, "stars": 3, "date": "2018-04-18", "duration": "1:49", "notes": "" },
-{ "track": 19, "selected": true,  "sampleset": "Menesterol",      "title": "Bird's First Flight",                                "score": 7, "stars": 3, "date": "2018-04-18", "duration": "2:02", "notes": "" },
+{ "track": 19, "selected": true,  "sampleset": "Menesterol",      "title": "Bird's First Flight",                                "score": 6, "stars": 3, "date": "2018-04-18", "duration": "2:02", "notes": "" },
 { "track": 20, "selected": true,  "sampleset": "Menesterol",      "title": "Dulzian",                                            "score": 7, "stars": 3, "date": "2018-04-18", "duration": "2:19", "notes": "" },
 { "track": 21, "selected": false, "sampleset": "Menesterol",      "title": "Chordish",                                           "score": 3, "stars": 1, "date": "2018-04-18", "duration": "3:21", "notes": "Garbage" },
 { "track": 22, "selected": true,  "sampleset": "Menesterol",      "title": "Nymphs",                                             "score": 8, "stars": 4, "date": "2018-04-18", "duration": "2:30", "notes": "I really like this one" },
@@ -61,6 +61,7 @@
 { "track": 60, "selected": true,  "sampleset": "Metz St. Eucaire","title": "Romantic Chromatic Fugue",                           "score": 6, "stars": 3, "date": "2018-07-04", "duration": "3:54", "notes": "Fugue on known chromatic theme; nothing to write home about" },
 { "track": 61, "selected": true,  "sampleset": "Caen",            "title": "Phrygian Wanderer",                                  "score": 7, "stars": 3, "date": "2018-07-07", "duration": "1:35", "notes": "" },
 { "track": 62, "selected": true,  "sampleset": "Rosales",         "title": "Youthful Optimism",                                  "score": 7, "stars": 4, "date": "2018-07-13", "duration": "2:41", "notes": "Nice energy; ending a little sudden (was nervous to modulate again)" },
-{ "track": 63, "selected": true,  "sampleset": "Freiberg",        "title": "Baroque Trio",                                       "score": 7, "stars": 3, "date": "2018-07-19", "duration": "2:31", "notes": "Baroque/Bachian trio study; Echos of #52 but in major and in four" }
+{ "track": 63, "selected": true,  "sampleset": "Freiberg",        "title": "Baroque Trio",                                       "score": 7, "stars": 3, "date": "2018-07-19", "duration": "2:31", "notes": "Baroque/Bachian trio study; Echos of #52 but in major and in four" },
+{ "track": 64, "selected": true,  "sampleset": "Laurenskerk Transept","title": "Another Baroque Trio Study",                     "score": 7, "stars": 4, "date": "2018-07-27", "duration": "3:21", "notes": "Another Baroque/Bachian trio study; Shares some material with #63; 1 hour prep" }
 
 ]

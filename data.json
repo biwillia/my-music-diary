@@ -62,6 +62,7 @@
 { "track": 61, "selected": true,  "sampleset": "Caen",            "title": "Phrygian Wanderer",                                  "score": 7, "stars": 3, "date": "2018-07-07", "duration": "1:35", "notes": "" },
 { "track": 62, "selected": true,  "sampleset": "Rosales",         "title": "Youthful Optimism",                                  "score": 7, "stars": 4, "date": "2018-07-13", "duration": "2:41", "notes": "Nice energy; ending a little sudden (was nervous to modulate again)" },
 { "track": 63, "selected": true,  "sampleset": "Freiberg",        "title": "Baroque Trio",                                       "score": 7, "stars": 3, "date": "2018-07-19", "duration": "2:31", "notes": "Baroque/Bachian trio study; Echos of #52 but in major and in four" },
-{ "track": 64, "selected": true,  "sampleset": "Laurenskerk Transept","title": "Another Baroque Trio Study",                     "score": 7, "stars": 4, "date": "2018-07-27", "duration": "3:21", "notes": "Another Baroque/Bachian trio study; Shares some material with #63; 1 hour prep" }
-
+{ "track": 64, "selected": true,  "sampleset": "Laurenskerk Transept","title": "Another Baroque Trio Study",                     "score": 7, "stars": 4, "date": "2018-07-27", "duration": "3:21", "notes": "Another Baroque/Bachian trio study; Shares some material with #63; 1 hour prep" },
+{ "track": 65, "selected": true,  "sampleset": "Menesterol",      "title": "Around We Go (5/8)",                                 "score": 5, "stars": 2, "date": "2018-08-03", "duration": "2:55", "notes": "I like the melody/harmony, but bad rhythm keeping ruined this improvisation" },
+{ "track": 66, "selected": true,  "sampleset": "Dingelstädt",     "title": "In Contemplation (Night Music)",                     "score": 7, "stars": 3, "date": "2018-08-09", "duration": "7:40", "notes": "Romantic pp->ff->pp; Not bad per se; perhaps a little too drawn out" }
 ]

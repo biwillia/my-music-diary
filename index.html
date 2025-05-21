@@ -222,7 +222,7 @@ function findNextTrack(dir) {
 function playTrack(track, clicked) {
 
     var audio = document.getElementById("audio")
-    audio.src = "/music/" + padTrackNumber(track) + ".mp3"
+    audio.src = "https://s3.us-east-1.amazonaws.com/my-music-diary.com/music/" + padTrackNumber(track) + ".mp3"
     audio.load()
     audio.play()
     
@@ -495,7 +495,7 @@ function populateTable(tracks) {
          
         a.appendChild(img)
         a.title = "Listen to '" + track.title + "'"
-        a.href = "/music/" + trackpadded + ".mp3";
+        a.href = "https://s3.us-east-1.amazonaws.com/my-music-diary.com/music/" + trackpadded + ".mp3";
         cell.appendChild(a)  
     }
 }
@@ -633,7 +633,7 @@ function doInit() {
         if (g_tracks.length > 0) {
             g_current_track = g_tracks[0].track
             var audio = document.getElementById("audio")
-            audio.src = "/music/" + padTrackNumber(g_current_track) + ".mp3"
+            audio.src = "https://s3.us-east-1.amazonaws.com/my-music-diary.com/music/" + padTrackNumber(g_current_track) + ".mp3"
             audio.load()
             var id = 'row-' + padTrackNumber(g_current_track)
             var tr = document.getElementById(id)

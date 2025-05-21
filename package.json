@@ -1,0 +1,9 @@
+{
+  "name": "my-music-diary",
+  "version": "1.0.0",
+  "description": "My Music Diary website",
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "mailgun.js": "^9.1.0"
+  }
+} 

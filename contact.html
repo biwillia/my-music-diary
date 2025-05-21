@@ -113,18 +113,34 @@ I'd love to hear from you if you have any questions, feedback, tips, or recommen
 
 
 <script>
-// get the html form
+document.getElementById('send-button').onclick = async function(evt) {
+    const form = document.getElementById('contact-form');
+    const formData = new FormData(form);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message')
+    };
 
+    try {
+        const response = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
 
-document.getElementById('send-button').onclick = function(evt) {
-    var form = document.getElementById('contact-form')
-    var formdata = new FormData(form)
+        if (!response.ok) {
+            throw new Error('Failed to send message');
+        }
 
-    Flexio.setup("xtdkxpcjwzkpgkhkcmhx")
-    Flexio.pipe("musicdiary-contact").run({data: formdata})
-    
-    form.style = "display:none"
-    document.getElementById('thank-you').innerHTML = "<b>Your message was sent. Thank you for writing!</b>"
+        form.style = "display:none";
+        document.getElementById('thank-you').innerHTML = "<b>Your message was sent. Thank you for writing!</b>";
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('thank-you').innerHTML = "<b>Sorry, there was an error sending your message. Please try again later.</b>";
+    }
 }
 
 

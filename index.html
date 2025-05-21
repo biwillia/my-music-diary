@@ -52,7 +52,7 @@
 <div class="welcome">
 <h3>Welcome to My Music Diary</h3>
 <p>Every couple of days I record spontaneous organ improvisations and compositions and post them to the diary. I give each track a self-assessment and assign it a score. To listen to the diary entries, click on one of the tracks below. Audio controls can be found at the bottom.</p>
-<p><b>Update Oct 24th:</b> Thanks for all the kind feedback. Hearing from you makes working on this project very enjoyable! -Ben</p>
+<p><b>Update January, 2021:</b> Well, I'm back! Due to tendonitis, I've not been able to play music for a year, but now the pain appears to be manageable, so I can create improvisations once again.</p>
 </div>
 
 <table id="tracks-table">
@@ -119,19 +119,19 @@ if (!String.prototype.repeat) {
   }
 }
 (function (ElementProto) {
-	if (typeof ElementProto.matches !== 'function') {
-		ElementProto.matches = ElementProto.msMatchesSelector
-	}
-	if (typeof ElementProto.closest !== 'function') {
-		ElementProto.closest = function closest(selector) {
-			var element = this
-			while (element && element.nodeType === 1) {
-				if (element.matches(selector)) { return element }
-				element = element.parentNode;
-			}
-			return null
-		}
-	}
+    if (typeof ElementProto.matches !== 'function') {
+        ElementProto.matches = ElementProto.msMatchesSelector
+    }
+    if (typeof ElementProto.closest !== 'function') {
+        ElementProto.closest = function closest(selector) {
+            var element = this
+            while (element && element.nodeType === 1) {
+                if (element.matches(selector)) { return element }
+                element = element.parentNode;
+            }
+            return null
+        }
+    }
 })(window.Element.prototype);
 // end polyfills for IE11
 
@@ -188,34 +188,34 @@ function findNextTrack(dir) {
         }
     }
 
-	var started_over = false
-	idx += dir
+    var started_over = false
+    idx += dir
 
-	while (true)
-	{
-		if ((dir > 0 && idx < g_tracks.length) || (dir < 0 && idx >= 0))
-		{
-			if (g_tracks[idx].selected) {
-				return g_tracks[idx].track
-			}
-		}
-		 else
-		{
-			// start over at the other side
-			if (g_tracks.length > 0 && !started_over) {
+    while (true)
+    {
+        if ((dir > 0 && idx < g_tracks.length) || (dir < 0 && idx >= 0))
+        {
+            if (g_tracks[idx].selected) {
+                return g_tracks[idx].track
+            }
+        }
+         else
+        {
+            // start over at the other side
+            if (g_tracks.length > 0 && !started_over) {
                 if (dir > 0) {
                     idx = -1
                 } else {
                     idx = g_tracks.length
                 }
-				started_over = true
-			} else {
-				return -1
-			}
-		}
-		
-		idx += dir
-	}
+                started_over = true
+            } else {
+                return -1
+            }
+        }
+        
+        idx += dir
+    }
 }
 
 
@@ -320,7 +320,7 @@ function onClickPlay(event) {
 }
 
 function onToggleSelected(event) {
-	var td = event.target
+    var td = event.target
     var tr = event.target.closest("tr")
     var track, trackpadded = tr.id
     if (trackpadded.substr(0,4) == 'row-')
@@ -328,16 +328,16 @@ function onToggleSelected(event) {
         trackpadded = trackpadded.substr(4)
         track = parseInt(trackpadded,10)
 
-		for (var i = 0; i < g_tracks.length; ++i) {
-			if (g_tracks[i].track == track) {
-				g_tracks[i].selected = !g_tracks[i].selected
-				if (g_tracks[i].selected) {
-					td.classList.add("checkmark")
-				} else {
-					td.classList.remove("checkmark")
-				}
-			}
-		}
+        for (var i = 0; i < g_tracks.length; ++i) {
+            if (g_tracks[i].track == track) {
+                g_tracks[i].selected = !g_tracks[i].selected
+                if (g_tracks[i].selected) {
+                    td.classList.add("checkmark")
+                } else {
+                    td.classList.remove("checkmark")
+                }
+            }
+        }
     }
 }
 
@@ -428,13 +428,13 @@ function populateTable(tracks) {
         addClasses(cell, column_classes[row.cells.length-1])
         
         // selected
-		cell = row.insertCell(row.cells.length)
+        cell = row.insertCell(row.cells.length)
         cell.addEventListener("click", onToggleSelected, false);
-		if (track.selected) {
-			cell.classList.add('checkmark')
-		}
+        if (track.selected) {
+            cell.classList.add('checkmark')
+        }
         addClasses(cell, column_classes[row.cells.length-1])
-		
+        
         // track date
         cell = row.insertCell(row.cells.length)
         cell.appendChild(document.createTextNode(track.date))
@@ -474,18 +474,18 @@ function populateTable(tracks) {
         
         // duration
         cell = row.insertCell(row.cells.length)
-		cell.align = 'right'
+        cell.align = 'right'
         cell.appendChild(document.createTextNode(track.duration))
         cell.addEventListener("click", onClickPlay, false);
         addClasses(cell, column_classes[row.cells.length-1])
         
         // download
         cell = row.insertCell(row.cells.length)
-		cell.align = 'center'
+        cell.align = 'center'
         a = document.createElement('a')
         //a.appendChild(document.createTextNode("Link"))
-		var img = document.createElement('img')
-		img.src = "/assets/img/download.svg"
+        var img = document.createElement('img')
+        img.src = "/assets/img/download.svg"
         if (isIE11) {
             img.width = 16
             img.height = 16
@@ -493,7 +493,7 @@ function populateTable(tracks) {
             img.style = "height: 1em; width:auto"
         }
          
-		a.appendChild(img)
+        a.appendChild(img)
         a.title = "Listen to '" + track.title + "'"
         a.href = "/music/" + trackpadded + ".mp3";
         cell.appendChild(a)  

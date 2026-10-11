@@ -87,23 +87,14 @@ function findNextTrack(dir) {
 }
 
 
-function playTrack(track, clicked) {
+function playTrack(track) {
 
     var audio = document.getElementById("audio")
     audio.src = "https://s3.us-east-1.amazonaws.com/my-music-diary.com/music/" + padTrackNumber(track) + ".mp3"
     audio.load()
     audio.play()
-    
+
     g_current_track = track
-    
-    gtag('event', 'view_item', {
-      "items": [
-        {
-          'id': padTrackNumber(track),
-          'clicked': clicked
-        }
-      ]
-    })
 }
 
 function isPaused() {
@@ -127,7 +118,7 @@ function skipTrack(dir) {
 
         var next_track = findNextTrack(dir)
         if (next_track != -1) {
-            playTrack(next_track, false)
+            playTrack(next_track)
             
             id = 'row-' + padTrackNumber(next_track)
             tr = document.getElementById(id)
@@ -180,7 +171,7 @@ function onClickPlay(event) {
 
             
                 
-            playTrack(track, true)
+            playTrack(track)
             tr.cells[0].classList.add("pause-button-hover")
             tr.cells[0].classList.remove("play-button-hover")
         }
